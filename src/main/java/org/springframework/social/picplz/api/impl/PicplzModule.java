@@ -16,18 +16,23 @@
 /**
  * 
  */
-package org.springframework.social.picplz.connect;
+package org.springframework.social.picplz.api.impl;
 
-import org.springframework.social.connect.support.OAuth2ConnectionFactory;
-import org.springframework.social.picplz.api.Picplz;
+import org.codehaus.jackson.Version;
+import org.codehaus.jackson.map.module.SimpleModule;
 
 /**
  * @author Jose Bovet Derpich
  *
  */
-public class PicplztConnectionFactory extends OAuth2ConnectionFactory<Picplz> {
+public class PicplzModule extends SimpleModule {
 
-	public PicplztConnectionFactory(String clientId, String clientSecret) {
-		super("picplz", new PicplzServiceProvider(clientId, clientSecret), new PicplzAdapter());
+	public PicplzModule() {
+		super("PicplzModule", new Version(1, 0, 0, null));
+	}
+	
+	@Override
+	public void setupModule(SetupContext context) {
+		super.setupModule(context);
 	}
 }

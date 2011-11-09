@@ -28,4 +28,6 @@ public interface UserOperations {
 	PicplzProfile getProfile(long userId);
 	
 	PicplzProfile getProfile(String userName);
+	
+	public static final String USERS_ENDPOINT = "user";
 }

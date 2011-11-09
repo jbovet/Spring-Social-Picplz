@@ -18,7 +18,6 @@
  */
 package org.springframework.social.picplz.api.impl;
 
-import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.picplz.api.PicplzProfile;
 import org.springframework.social.picplz.api.UserOperations;
 
@@ -26,21 +25,16 @@ import org.springframework.social.picplz.api.UserOperations;
  * @author Jose Bovet Derpich
  *
  */
-public class UserTemplate extends AbstractOAuth2ApiBinding implements UserOperations {
+public class UserTemplate extends AbstractPicplzOperations implements UserOperations {
 
-	public UserTemplate() {
-	}
-
-	/**
-	 * @param accessToken
-	 */
-	public UserTemplate(String accessToken) {
-		super(accessToken);
+	public UserTemplate(PicplzTemplate picplz, boolean isAuthorized) {
+		super(picplz, isAuthorized);
 	}
 
 	@Override
 	public PicplzProfile getProfile() {
-		return null;
+		requireUserAuthorization();
+		return picPlzTemplate.getRestTemplate().getForObject("http://api.picplz.com/api/v2/user.json?id=self", PicplzProfile.class);
 	}
 
 	@Override
@@ -52,4 +46,6 @@ public class UserTemplate extends AbstractOAuth2ApiBinding implements UserOperat
 	public PicplzProfile getProfile(String userName) {
 		return null;
 	}
+
+
 }

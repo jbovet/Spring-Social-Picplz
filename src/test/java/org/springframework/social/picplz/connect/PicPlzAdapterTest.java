@@ -15,6 +15,14 @@
  */
 package org.springframework.social.picplz.connect;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.social.connect.UserProfile;
+import org.springframework.social.picplz.api.Picplz;
+import org.springframework.social.picplz.api.PicplzProfile;
+
 /***
  * 
  * @author Jose Bovet Derpich
@@ -22,6 +30,16 @@ package org.springframework.social.picplz.connect;
  */
 public class PicPlzAdapterTest {
 
+	private PicplzAdapter picplzAdapter = new PicplzAdapter();
 	
+	private Picplz picplz = Mockito.mock(Picplz.class);
 	
+	@Test
+	public void fetchProfile() {
+		Mockito.when(picplz.userOperations().getProfile()).thenReturn(new PicplzProfile("josebovet", "Jose Bovet", "1", "3", "123456678",
+				"http://s0.ui1.picplzthumbs.com/usericons/98/51/54/9851540328c4a69128bae75089b6a136df453d8e_meds.jpg?"));
+		UserProfile profile = picplzAdapter.fetchUserProfile(picplz);
+		assertEquals("josebovet", profile.getUsername());
+		assertEquals("Jose Bovet", profile.getName());
+	}
 }

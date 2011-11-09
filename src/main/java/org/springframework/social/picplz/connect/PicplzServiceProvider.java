@@ -19,8 +19,8 @@
 package org.springframework.social.picplz.connect;
 
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
-import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.picplz.api.Picplz;
+import org.springframework.social.picplz.api.impl.PicplzTemplate;
 
 /**
  * PicPlz ServiceProvider implementation
@@ -29,13 +29,15 @@ import org.springframework.social.picplz.api.Picplz;
  */
 public class PicplzServiceProvider extends AbstractOAuth2ServiceProvider<Picplz> {
 
-	public PicplzServiceProvider(OAuth2Operations oauth2Operations) {
-		super(oauth2Operations);
+	private final String clientId;
+	
+	public PicplzServiceProvider(String clientId, String clientSecret) {
+		super(new PicPlzOAuth2Template(clientId, clientSecret));
+		this.clientId = clientId;
 	}
-
-	@Override
+	
 	public Picplz getApi(String accessToken) {
-		return null;
+		return new PicplzTemplate(clientId, accessToken);
 	}
 
 }

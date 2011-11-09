@@ -18,10 +18,13 @@
  */
 package org.springframework.social.picplz.connect;
 
+import org.springframework.social.ApiException;
 import org.springframework.social.connect.ApiAdapter;
 import org.springframework.social.connect.ConnectionValues;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.UserProfileBuilder;
 import org.springframework.social.picplz.api.Picplz;
+import org.springframework.social.picplz.api.PicplzProfile;
 
 /**
  * @author Jose Bovet Derpich
@@ -30,25 +33,31 @@ import org.springframework.social.picplz.api.Picplz;
 public class PicplzAdapter implements ApiAdapter<Picplz> {
 
 	@Override
-	public boolean test(Picplz api) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean test(Picplz picplz) {
+		try {
+			picplz.userOperations().getProfile();
+			return true;
+		} catch (ApiException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void setConnectionValues(Picplz api, ConnectionValues values) {
-		// TODO Auto-generated method stub
-		
+	public void setConnectionValues(Picplz picplz, ConnectionValues values) {
+		PicplzProfile profile = picplz.userOperations().getProfile();
+		values.setDisplayName(profile.getDisplayName());
+		values.setImageUrl(profile.getProfileImageUrl());
+		values.setProviderUserId(profile.getId());
 	}
 
 	@Override
-	public UserProfile fetchUserProfile(Picplz api) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserProfile fetchUserProfile(Picplz picplz) {
+		PicplzProfile profile = picplz.userOperations().getProfile();
+		return new UserProfileBuilder().setName(profile.getDisplayName()).setUsername(profile.getUsername()).build();
 	}
 
 	@Override
-	public void updateStatus(Picplz api, String message) {
+	public void updateStatus(Picplz picplz, String message) {
 		// TODO Auto-generated method stub
 		
 	}

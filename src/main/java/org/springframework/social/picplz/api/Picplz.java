@@ -25,5 +25,10 @@ import org.springframework.social.ApiBinding;
  *
  */
 public interface Picplz extends ApiBinding {
+	
+	/***
+	 * Returns the portion of the Instagram API that handles user operations
+	 */
+	UserOperations userOperations();
 
 }

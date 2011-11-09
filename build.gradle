@@ -1,0 +1,5 @@
+
+description = 'Spring Social PicPlz'
+abbreviation = 'social-picplz'
+
+apply plugin: 'base'

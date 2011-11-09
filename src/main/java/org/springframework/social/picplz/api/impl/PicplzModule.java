@@ -20,6 +20,7 @@ package org.springframework.social.picplz.api.impl;
 
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.module.SimpleModule;
+import org.springframework.social.picplz.api.PicplzProfile;
 
 /**
  * @author Jose Bovet Derpich
@@ -33,6 +34,6 @@ public class PicplzModule extends SimpleModule {
 	
 	@Override
 	public void setupModule(SetupContext context) {
-		super.setupModule(context);
+		context.setMixInAnnotations(PicplzProfile.class,PicplzProfileMixin.class);
 	}
 }

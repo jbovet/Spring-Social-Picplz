@@ -28,17 +28,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class PicplzProfile implements Serializable {
 	
-	private final String username;
-	private final String displayName;
-	private final String followingCount;
-	private final String followerCount;
-	private final String id;
-	private final String profileImageUrl;
-	
 	public PicplzProfile(String username, String displayName,
 			String followingCount, String followerCount, String id,
 			String profileImageUrl) {
-		super();
 		this.username = username;
 		this.displayName = displayName;
 		this.followingCount = followingCount;
@@ -88,4 +80,11 @@ public class PicplzProfile implements Serializable {
 	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
+	
+	private final String username;
+	private final String displayName;
+	private final String followingCount;
+	private final String followerCount;
+	private final String id;
+	private final String profileImageUrl;
 }

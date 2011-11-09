@@ -35,7 +35,6 @@ public class PicPlzOAuth2Template extends OAuth2Template {
 	@Override
 	@SuppressWarnings("unchecked")	
 	protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
-		// TODO: Look into weird JSON response bug.
 		Map<String,Object> response = getRestTemplate().postForObject(accessTokenUrl, parameters, Map.class);
 		Entry<String,Object> entry = response.entrySet().iterator().next();
 		String jsonString = entry.getKey();

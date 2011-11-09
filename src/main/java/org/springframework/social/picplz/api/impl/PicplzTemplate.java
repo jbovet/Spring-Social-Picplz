@@ -58,15 +58,15 @@ public class PicplzTemplate extends AbstractOAuth2ApiBinding implements Picplz {
 	
 	
 	private void registerInstagramJsonModule(RestTemplate restTemplate) {
-	    List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
-        for (HttpMessageConverter<?> converter : converters) {
-            if(converter instanceof MappingJacksonHttpMessageConverter) {
-                MappingJacksonHttpMessageConverter jsonConverter = (MappingJacksonHttpMessageConverter) converter;
-                ObjectMapper objectMapper = new ObjectMapper();             
-                objectMapper.registerModule(new PicplzModule());
-                jsonConverter.setObjectMapper(objectMapper);
-            }
-        }
+		List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
+		for (HttpMessageConverter<?> converter : converters) {
+			if(converter instanceof MappingJacksonHttpMessageConverter) {
+				MappingJacksonHttpMessageConverter jsonConverter = (MappingJacksonHttpMessageConverter) converter;
+				ObjectMapper objectMapper = new ObjectMapper();				
+				objectMapper.registerModule(new PicplzModule());
+				jsonConverter.setObjectMapper(objectMapper);
+			}
+		}
 	}
 	
 	public URIBuilder withAccessToken(String uri) {

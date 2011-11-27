@@ -27,14 +27,13 @@ import org.springframework.social.picplz.api.UserOperations;
  */
 public class UserTemplate extends AbstractPicplzOperations implements UserOperations {
 
-	public UserTemplate(PicplzTemplate picplz, boolean isAuthorized) {
-		super(picplz, isAuthorized);
+	public UserTemplate(PicplzTemplate picplz) {
+		super(picplz);
 	}
 
 	@Override
 	public PicplzProfile getProfile() {
-		requireUserAuthorization();
-		return picPlzTemplate.getRestTemplate().getForObject("http://api.picplz.com/api/v2/user.json?id=self", PicplzProfile.class);
+		return null;
 	}
 
 	@Override

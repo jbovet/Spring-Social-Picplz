@@ -25,7 +25,6 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.picplz.api.Picplz;
 import org.springframework.social.picplz.api.UserOperations;
-import org.springframework.social.support.URIBuilder;
 import org.springframework.web.client.RestTemplate;
 
 /***
@@ -35,27 +34,18 @@ import org.springframework.web.client.RestTemplate;
  */
 public class PicplzTemplate extends AbstractOAuth2ApiBinding implements Picplz {
 
-	private final String clientId;
-	private final String accessToken;
 	private final UserOperations userOperations;
 
-	public PicplzTemplate(String clientId, String accessToken) {
-		this(clientId, accessToken, true);
-	}
-	
-	private PicplzTemplate(String clientId, String accessToken, boolean isAuthorizedForUser) {
+	public PicplzTemplate(String accessToken) {
 	    super(accessToken);
-		this.clientId = clientId;
-		this.accessToken = accessToken;	
 		MappingJacksonHttpMessageConverter json = new MappingJacksonHttpMessageConverter();
         json.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "javascript")));
 		getRestTemplate().getMessageConverters().add(json);
 		registerInstagramJsonModule(getRestTemplate());
 
 		getRestTemplate().setErrorHandler(new PicplzErrorHandler());
-		userOperations = new UserTemplate(this, isAuthorizedForUser);
+		userOperations = new UserTemplate(this);
 	}
-	
 	
 	private void registerInstagramJsonModule(RestTemplate restTemplate) {
 		List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
@@ -69,15 +59,8 @@ public class PicplzTemplate extends AbstractOAuth2ApiBinding implements Picplz {
 		}
 	}
 	
-	public URIBuilder withAccessToken(String uri) {
-		return (accessToken == null) 
-			? URIBuilder.fromUri(uri).queryParam("client_id", clientId)
-			: URIBuilder.fromUri(uri).queryParam("access_token", accessToken);
-	}
-	
 	@Override
 	public UserOperations userOperations() {
 		return userOperations;
 	}
-	
 }

@@ -29,15 +29,12 @@ import org.springframework.social.picplz.api.impl.PicplzTemplate;
  */
 public class PicplzServiceProvider extends AbstractOAuth2ServiceProvider<Picplz> {
 
-	private final String clientId;
-	
 	public PicplzServiceProvider(String clientId, String clientSecret) {
 		super(new PicPlzOAuth2Template(clientId, clientSecret));
-		this.clientId = clientId;
 	}
 	
 	public Picplz getApi(String accessToken) {
-		return new PicplzTemplate(clientId, accessToken);
+		return new PicplzTemplate(accessToken);
 	}
 
 }

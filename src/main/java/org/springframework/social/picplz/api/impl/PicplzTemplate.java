@@ -25,6 +25,7 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.picplz.api.Picplz;
 import org.springframework.social.picplz.api.UserOperations;
+import org.springframework.social.support.URIBuilder;
 import org.springframework.web.client.RestTemplate;
 
 /***
@@ -35,19 +36,22 @@ import org.springframework.web.client.RestTemplate;
 public class PicplzTemplate extends AbstractOAuth2ApiBinding implements Picplz {
 
 	private final UserOperations userOperations;
-
+	
+	private final String accessToken;
+	
 	public PicplzTemplate(String accessToken) {
 	    super(accessToken);
+	    this.accessToken = accessToken;
 		MappingJacksonHttpMessageConverter json = new MappingJacksonHttpMessageConverter();
         json.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "javascript")));
 		getRestTemplate().getMessageConverters().add(json);
-		registerInstagramJsonModule(getRestTemplate());
+		registerPicplzJsonModule(getRestTemplate());
 
 		getRestTemplate().setErrorHandler(new PicplzErrorHandler());
 		userOperations = new UserTemplate(this);
 	}
 	
-	private void registerInstagramJsonModule(RestTemplate restTemplate) {
+	private void registerPicplzJsonModule(RestTemplate restTemplate) {
 		List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
 		for (HttpMessageConverter<?> converter : converters) {
 			if(converter instanceof MappingJacksonHttpMessageConverter) {
@@ -57,6 +61,10 @@ public class PicplzTemplate extends AbstractOAuth2ApiBinding implements Picplz {
 				jsonConverter.setObjectMapper(objectMapper);
 			}
 		}
+	}
+	
+	public URIBuilder withOauth_token(String uri) {
+		return URIBuilder.fromUri(uri).queryParam("oauth_token", accessToken);
 	}
 	
 	@Override

@@ -29,5 +29,5 @@ public interface UserOperations {
 	
 	PicplzProfile getProfile(String userName);
 	
-	public static final String USERS_ENDPOINT = "user.json?";
+	public static final String USERS_ENDPOINT = "user.json";
 }

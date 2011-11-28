@@ -33,7 +33,9 @@ public class UserTemplate extends AbstractPicplzOperations implements UserOperat
 
 	@Override
 	public PicplzProfile getProfile() {
-		return null;
+		//requireAuthorization();
+		System.out.println(buildUri("user.json?id=self"));
+		return get(buildUri("user.json?id=self"), PicplzProfile.class);
 	}
 
 	@Override
